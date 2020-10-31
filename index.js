@@ -30,10 +30,10 @@ app.get("/almacen/:departamento", function(req,res){
 })
 
 app.post("/almacen", function(req, res){
-    /* Recibe un objeto con los campos del mueble nuevo y el campo adicional opcion. Añade el objeto nuevo al array correspondiente según el valor de opcion y luego devuelve el almacen. En caso de error, devuelve un objeto con el mensaje de error.  */
-m
+    /* Recibe un objeto con los campos del mueble nuevo y el campo adicional opcion. Añade el objeto nuevo al array correspondiente según el valor de opcion y luego devuelve el departamento del almacen de la opcion. En caso de error, devuelve un objeto con el mensaje de error.  */
     let opcion = req.body.opcion
     let nombre = req.body.nombre.toUpperCase()
+    let descripcion = req.body.descripcion
     let img = req.body.img
     let precio = req.body.precio
     let mueble = {
@@ -42,23 +42,27 @@ m
         img: img,
         precio: precio,
     }
+    let respuesta 
     let boolean = false
     switch (opcion){
         case "armarios":
             almacen.armarios.push(mueble)
+            respuesta = almacen.armarios
             boolean = true
             break;
         case "mesas":
             almacen.mesas.push(mueble)
+            respuesta = almacen.mesas
             boolean = true
             break;
         case "sillas":
             almacen.sillas.push(mueble)
+            respuesta = almacen.sillas
             boolean = true
             break;
     }
     boolean 
-    ? res.send(almacen)
+    ? res.send(respuesta)
     : res.send({error: true, mensaje: "No ha podido añadirse correctamente"})
 })
 
@@ -70,6 +74,7 @@ app.put("/almacen", function(req,res){
     let NewDescipcion = req.body.descripcion
     let NewImg = req.body.img
     let NewPrecio = req.body.precio
+    let respuesta
     let boolean = false
 
     switch (opcion){
@@ -80,6 +85,7 @@ app.put("/almacen", function(req,res){
                         almacen.armarios[i].descripccion = NewDescipcion
                         almacen.armarios[i].img = NewImg
                         almacen.armarios[i].precio = NewPrecio
+                        respuesta = almacen.armarios
                         boolean = true
             }
         }
@@ -91,6 +97,7 @@ app.put("/almacen", function(req,res){
                         almacen.mesas[i].descripccion = NewDescipcion
                         almacen.mesas[i].img = NewImg
                         almacen.mesas[i].precio = NewPrecio
+                        respuesta = almacen.mesas
                         boolean = true
                 }
         }
@@ -102,6 +109,7 @@ app.put("/almacen", function(req,res){
                         almacen.sillas[i].descripccion = NewDescipcion
                         almacen.sillas[i].img = NewImg
                         almacen.sillas[i].precio = NewPrecio
+                        respuesta = almacen.sillas
                         boolean = true
             }
         }
@@ -109,7 +117,7 @@ app.put("/almacen", function(req,res){
             
     }
     boolean 
-    ? res.send(almacen)
+    ? res.send(respuesta)
     : res.send({error: true, mensaje: "No ha podido modificarse correctamente"})
 
 })
@@ -118,12 +126,14 @@ app.delete("/almacen", function(req, res){
     /* Recibe un objeto con los cambos opcion y nombre. Busca el nombre dentro del array del departamento marcado por opcion y si lo encuentra lo borra y devuelve el almacen. En caso contrario, devuelve error.  */
     let opcion = req.body.opcion
     let nombre = req.body.nombre.toUpperCase()
+    let respuesta
     let boolean = false
     switch (opcion){
         case "armarios":
             for(let i = 0; i< almacen.armarios.length; i++){
                 if(almacen.armarios[i].nombre.includes(nombre)){
                     almacen.armarios.splice(i,1)
+                    respuesta = almacen.armarios
                     boolean = true
                 }
             }
@@ -132,6 +142,7 @@ app.delete("/almacen", function(req, res){
             for(let i = 0; i< almacen.mesas.length; i++){
                 if(almacen.mesas[i].nombre.includes(nombre)){
                     almacen.mesas.splice(i,1)
+                    respuesta = almacen.mesas
                     boolean = true
                 }
             }
@@ -140,13 +151,14 @@ app.delete("/almacen", function(req, res){
             for(let i = 0; i< almacen.sillas.length; i++){
                 if(almacen.sillas[i].nombre.includes(nombre)){
                     almacen.sillas.splice(i,1)
+                    respuesta = almacen.sillas
                     boolean = true
                 }
             }
             break;
     }
     boolean 
-    ? res.send(almacen)
+    ? res.send(respuesta)
     : res.send({error: true, mensaje: "No ha podido borrarse correctamente"})
 })
 
