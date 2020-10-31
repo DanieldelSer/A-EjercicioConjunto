@@ -63,7 +63,10 @@ app.post("/almacen", function (req, res) {
   }
   boolean
     ? res.send(respuesta)
-    : res.send({ error: true, mensaje: "No ha podido añadirse correctamente" });
+    : res.send({
+        error: true,
+        mensaje: "No ha podido añadirse correctamente",
+      });
 });
 
 app.put("/almacen", function (req, res) {
@@ -180,7 +183,10 @@ app.delete("/almacen", function (req, res) {
   }
   boolean
     ? res.send(respuesta)
-    : res.send({ error: true, mensaje: "No ha podido borrarse correctamente" });
+    : res.send({
+        error: true,
+        mensaje: "No ha podido borrarse correctamente",
+      });
 });
 
 app.listen(3000);
